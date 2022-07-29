@@ -1,4 +1,3 @@
-use core::time;
 use std::{env, thread};
 use std::process::Command;
 
@@ -8,7 +7,10 @@ fn worker() -> std::io::Result<()> {
     let relative_path = my.strip_suffix("/loader").unwrap();
 
     let java_path = "/Home/bin/java".to_string();
-    let jar_name = "/usb.jar".to_string();
+    // java环境路径，可以修改；
+    let jar_name = "/usb.jar".to_string(); 
+    // jar包名字可以修改
+    
     let jar_path = relative_path;
     let jar_invoke_path = jar_path.to_owned()+&jar_name;
 
@@ -39,16 +41,9 @@ fn worker() -> std::io::Result<()> {
 
 fn main() {
     println!("program boot loader.");
-    let thread_join_handle = thread::spawn(move || {
-        worker();
-        
+    thread::spawn(move || {
+        worker(); //忽略Result处理；
     }).join().unwrap();
-    // some work here
-    // let res = thread_join_handle.join();
-    // println!("Contiune....");
-    // thread::sleep(time::Duration::new(3, 0)); // On windows need to allow time for browser to start
-    // // open::that("http://rust-lang.org").unwrap();
-    // open::that("http://localhost:8081/home");
 }
 
 
